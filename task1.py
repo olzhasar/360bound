@@ -1,16 +1,13 @@
-from collections import defaultdict
-from typing import List, Union, Dict
+from typing import List, Union, Dict, Set
 
 
 def get_weights(arr: List[Dict[str, Union[int, List[int]]]]):
     if not arr:
         return []
 
-    l = len(arr)
+    weights: List[int] = [0] * len(arr)
 
-    weights: List[int] = [0] * l
-
-    without_parent: List[int] = list(range(1, l + 1))
+    top_nodes: Set[int] = set(range(1, len(arr) + 1))
 
     children_mapping: Dict[int, List[int]] = {}
 
@@ -22,9 +19,7 @@ def get_weights(arr: List[Dict[str, Union[int, List[int]]]]):
 
         for el in row["elems"]:
             children_mapping[i].append(el)
-            without_parent.remove(el)
-
-    root_id = without_parent[0]
+            top_nodes.remove(el)
 
     def calc_weight(node_id: int):
         for child in children_mapping[node_id]:
@@ -32,6 +27,7 @@ def get_weights(arr: List[Dict[str, Union[int, List[int]]]]):
 
         return weights[node_id - 1]
 
-    calc_weight(root_id)
+    for node_id in top_nodes:
+        calc_weight(node_id)
 
     return weights
