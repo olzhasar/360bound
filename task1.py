@@ -7,7 +7,7 @@ def get_weights(arr: List[Row]) -> Dict[str, int]:
     if not arr:
         return []
 
-    mapping: Dict[int, row] = {}
+    mapping: Dict[int, Row] = {}
 
     for row in arr:
         i = row["id"]
