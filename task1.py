@@ -24,7 +24,7 @@ def get_weights(arr: List[Row]) -> Dict[str, int]:
 
         return row["total_weight"]
 
-    for row in arr:
+    for row in mapping.values():
         calc_weight(row)
 
     return {str(key): value["total_weight"] for key, value in mapping.items()}
