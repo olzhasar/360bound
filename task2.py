@@ -23,7 +23,8 @@ class Printer(ABC):
 
     @abstractmethod
     def print(self):
-        raise NotImplementedError
+        """Printing behaviour must be overriden"""
+        pass
 
 
 class Canon(Printer):
