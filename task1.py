@@ -1,7 +1,7 @@
 from typing import List, Union, Dict, Set
 
 
-def get_weights(arr: List[Dict[str, Union[int, List[int]]]]):
+def get_weights(arr: List[Dict[str, Union[int, List[int]]]]) -> List[int]:
     if not arr:
         return []
 
