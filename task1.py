@@ -3,7 +3,7 @@ from typing import List, Union, Dict, Set
 Row = Dict[str, Union[int, List[int]]]
 
 
-def get_weights(arr: List[Dict[str, Union[int, List[int]]]]) -> Dict[str, int]:
+def get_weights(arr: List[Row]) -> Dict[str, int]:
     if not arr:
         return []
 
