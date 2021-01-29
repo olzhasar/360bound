@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict
+from typing import Dict, Optional
 from abc import ABC, abstractmethod
 
 
@@ -42,9 +42,17 @@ class HP(Printer):
 
 
 class Order:
+    _printer: Optional[Printer] = None
+
     def __init__(self, content: str, printer_model: str):
         self.content = content
-        self.printer = Printer.get_by_model(printer_model)
+        self.printer_model = printer_model
+
+    @property
+    def printer(self):
+        if not self._printer:
+            self._printer = Printer.get_by_model(self.printer_model)
+        return self._printer
 
     def print(self):
         return self.printer.print()
