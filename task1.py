@@ -1,33 +1,26 @@
 from typing import List, Union, Dict, Set
 
+Row = Dict[str, Union[int, List[int]]]
 
-def get_weights(arr: List[Dict[str, Union[int, List[int]]]]) -> List[int]:
+
+def get_weights(arr: List[Dict[str, Union[int, List[int]]]]) -> Dict[str, int]:
     if not arr:
         return []
 
-    weights: List[int] = [0] * len(arr)
+    weights: Dict[str, int] = {}
 
-    top_nodes: Set[int] = set(range(1, len(arr) + 1))
+    def calc_weight(row: Row):
+        key = str(row["id"])
 
-    children_mapping: Dict[int, List[int]] = {}
+        if key not in weights:
+            weights[key] = row["weight"]
+
+            for child in filter(lambda x: x["id"] in row["elems"], arr):
+                weights[key] += calc_weight(child)
+
+        return weights[key]
 
     for row in arr:
-        i = row["id"]
-
-        weights[i - 1] = row["weight"]
-        children_mapping[i] = []
-
-        for el in row["elems"]:
-            children_mapping[i].append(el)
-            top_nodes.remove(el)
-
-    def calc_weight(node_id: int):
-        for child in children_mapping[node_id]:
-            weights[node_id - 1] += calc_weight(child)
-
-        return weights[node_id - 1]
-
-    for node_id in top_nodes:
-        calc_weight(node_id)
+        calc_weight(row)
 
     return weights
