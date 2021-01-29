@@ -16,15 +16,15 @@ def get_weights(arr: List[Row]) -> Dict[str, int]:
         mapping[i] = row
 
     def calc_weight(row: Row):
-        if not "full_weight" in row:
-            row["full_weight"] = row["weight"]
+        if not "total_weight" in row:
+            row["total_weight"] = row["weight"]
 
             for child in row["elems"]:
-                row["full_weight"] += calc_weight(mapping[child])
+                row["total_weight"] += calc_weight(mapping[child])
 
-        return row["full_weight"]
+        return row["total_weight"]
 
     for row in arr:
         calc_weight(row)
 
-    return {str(key): value["full_weight"] for key, value in mapping.items()}
+    return {str(key): value["total_weight"] for key, value in mapping.items()}
